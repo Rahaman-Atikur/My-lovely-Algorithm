@@ -3,22 +3,21 @@ using namespace std;
 const int N = 1e5+5;
 vector<int> adj[N];
 bool vis[N];
-bool pathVis[N];
+int parentArray[N];
 bool ans;
 
 void dfs(int parent){
     vis[parent]=true;
-    pathVis[parent]=true;
-    cout<<parent<<endl;
     for(int child: adj[parent]){
-        if(pathVis[child]==true){
+        if(vis[child]==true && child!=parentArray[parent] ){
             ans = true;
         }
         if(vis[child]==false){
+            parentArray[child]=parent;
             dfs(child);
+           
         }
     }
-    pathVis[parent]=false;
 
 }
 int main()
@@ -29,21 +28,20 @@ int main()
         int a,b;
         cin>>a>>b;
         adj[a].push_back(b);
+        adj[b].push_back(a);
     }
     memset(vis,false,sizeof(vis));
-    memset(pathVis,false,sizeof(pathVis));
+    memset(parentArray,-1,sizeof(parentArray));
     ans = false;
     for(int i=0;i<n;i++){
         if(vis[i]==false){
             dfs(i);
         }
     }
-    if(ans==true){
-        cout<<"Cycle Detected";
-    }
-    else{
-        cout<<"Cycle is not Detected";
-    }
 
+    if(ans==true)
+        cout<<"Cycle Detected";
+    else
+        cout<<"Cycle not Detected";
     return 0;
 }

@@ -9,7 +9,6 @@ bool ans;
 void dfs(int parent){
     vis[parent]=true;
     pathVis[parent]=true;
-    cout<<parent<<endl;
     for(int child: adj[parent]){
         if(pathVis[child]==true){
             ans = true;
@@ -19,7 +18,6 @@ void dfs(int parent){
         }
     }
     pathVis[parent]=false;
-
 }
 int main()
 {
@@ -29,21 +27,18 @@ int main()
         int a,b;
         cin>>a>>b;
         adj[a].push_back(b);
+
     }
     memset(vis,false,sizeof(vis));
     memset(pathVis,false,sizeof(pathVis));
-    ans = false;
     for(int i=0;i<n;i++){
         if(vis[i]==false){
             dfs(i);
         }
     }
-    if(ans==true){
+    if(ans==true)
         cout<<"Cycle Detected";
-    }
-    else{
-        cout<<"Cycle is not Detected";
-    }
-
+    else
+        cout<<"Cycle not Detected";
     return 0;
 }
